@@ -64,17 +64,18 @@ fun main(args: Array<String>) {
 //    val DESC = "管理员用户表"
 
     //文件名称
-    val PKG="com.zhihuishu.aries.liveRoom.datasource"
+    val PKG="com.zhihuishu.aries.chat"
     //数据库名称
-    val DATABASE = "db_aries_live"
+//    val DATABASE = "db_aries_log"
+    val DATABASE = "db_aries_class_tools"
     //表名称
-    val TBL_NAME = "LIVE_COMPANY"
+    val TBL_NAME = "CLASS_GROUP"
     //Java实体类名称
-    val JAVA_NAME = "LiveCompany"
+    val JAVA_NAME = "ClassGroup"
     //表说明
-    val DESC = "直播任务所属企业"
+    val DESC = "班群关联表"
 
-    val OUTPUTPATH = "E:\\0.test\\1.mybatis_tools"
+    val OUTPUTPATH = "E:\\zhishi\\mybatis_tools"
 
     //文件名称
 //    val PKG="com.zhihuishu.aries.liveRoom.datasource"
