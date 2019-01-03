@@ -45,6 +45,16 @@ ${'$'}{_this_indent}*/${'$'}{annotation}
 ${'$'}{_this_indent}${'$'}{scope} void ${'$'}{_this_name}(${'$'}{objType} ${'$'}{_this_variableName})${'$'}{impl.${'$'}{_this_name}:{}}
 """))
 
+
+        list.add(MMethod("${'$'}{space}","batchSave","批量新增","${'$'}{variableName}List","""
+${'$'}{_this_indent}/**
+${'$'}{_this_indent}* ${'$'}{description} ${'$'}{_this_nameCN}
+${'$'}{_this_indent}*/${'$'}{annotation}
+${'$'}{_this_indent}${'$'}{scope} List<${'$'}{objType}> ${'$'}{_this_name}(${'$'}{paramAnno:}List<${'$'}{objType}> ${'$'}{_this_variableName})${'$'}{impl.${'$'}{_this_name}:{}}
+"""))
+
+
+
         list.add(MMethod("${'$'}{space}","delete","删除","${'$'}{variableName}","""
 ${'$'}{_this_indent}/**
 ${'$'}{_this_indent}* ${'$'}{description} ${'$'}{_this_nameCN}

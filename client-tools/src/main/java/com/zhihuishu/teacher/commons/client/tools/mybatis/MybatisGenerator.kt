@@ -10,91 +10,23 @@ import java.sql.DriverManager
 
 
 fun main(args: Array<String>) {
-    ///////////////START-OF-CONFIG//////////////////
-//    val TBL_NAME = "TBL_OPEN_ADVERTISEMENT"
-//    val PKG="com.zhihuishu.aries.operation"
-//    val DATABASE = "db_aries_operation"
-//    val TBL_NAME = "TBL_DAILY_PUSH"
-//    val JAVA_NAME = "DailyPush"
-//    val DESC = "每日推送"
 
-//    val PKG="com.zhihuishu.aries.course"
-//    val DATABASE = "db_aries_course"
-//    val TBL_NAME = "TBL_RELEVANCE_COURSE"
-//    val JAVA_NAME = "CourseRelevance"
-//    val DESC = "课程权限"
-
-//    val PKG="com.zhihuishu.aries.run"
-//    val DATABASE = "db_aries_run"
-//    val TBL_NAME = "TBL_RECRUIT_ASSISTANT"
-//    val JAVA_NAME = "RecruitAssistant"
-//    val DESC = "招生辅导员关系"
-
-//    val PKG="com.zhihuishu.aries.interaction"
-//    val DATABASE = "db_aries_interaction"
-//    val TBL_NAME = "TBL_CHAPTER_SORT"
-//    val JAVA_NAME = "ChapterSort"
-//    val DESC = "章节序号冗余表"
-
-
-//    val PKG="com.zhihuishu.army.db"
-//    val DATABASE = "DB_ARMY_STUDY"
-//    val TBL_NAME = "ARMY_COURSE"
-//    val JAVA_NAME = "ArmyCourse"
-//    val DESC = "自定义课程表"
-
-//    val PKG="com.zhihuishu.army.db"
-//    val DATABASE = "DB_ARMY_STUDY"
-//    val TBL_NAME = "ARMY_USER_COURSE"
-//    val JAVA_NAME = "ArmyUserCourse"
-//    val DESC = "自定义选课表"
-
-//    val PKG="com.zhihuishu.army.db"
-//    val DATABASE = "DB_ARMY_STUDY"
-//    val TBL_NAME = "ARMY_STUDENT_STUDY_RECORD"
-//    val JAVA_NAME = "ArmyStudentStudyRecord"
-//    val DESC = "自定义课程学习进度表"
-
-
-//    val PKG="com.zhihuishu.aries.teachmanage"
-//    val DATABASE = "db_aries_teachmanage"
-//    val ONE_TO_MANYID = "COURSE_ID" // 一对多id，可为空
-//    val TBL_NAME = "TM_USER_ROLE"
-//    val JAVA_NAME = "TmUserRole"
-//    val DESC = "管理员用户表"
 
     //文件名称
-    val PKG="com.zhihuishu.aries.chat"
+    val PKG="com.zhihuishu.aries.run"
     //数据库名称
-//    val DATABASE = "db_aries_log"
-    val DATABASE = "db_aries_class_tools"
+    val DATABASE = "db_org_menu"
     //表名称
-    val TBL_NAME = "CLASS_GROUP"
+    val TBL_NAME = "TBL_COMPANY_MENU"
     //Java实体类名称
-    val JAVA_NAME = "ClassGroup"
+    val JAVA_NAME = "CompanyMenu"
     //表说明
-    val DESC = "班群关联表"
+    val DESC = "企业菜单"
 
     val OUTPUTPATH = "E:\\zhishi\\mybatis_tools"
 
-    //文件名称
-//    val PKG="com.zhihuishu.aries.liveRoom.datasource"
-//    //数据库名称
-//    val DATABASE = "db_aries_live"
-//    //表名称
-//    val TBL_NAME = "LIVE_REPLAY"
-//    //Java实体类名称
-//    val JAVA_NAME = "LiveReplay"
-//    //表说明
-//    val DESC = "直播任务收流地址对象"
-//    val OUTPUTPATH = "C:\\Users\\Jiangli\\Desktop\\outpath"
-
-
-    //aries
+    //数据库链接地址
     val DB_URL = "jdbc:mysql://192.168.222.8:3306?user=root&password=ablejava"
-
-    //zhihuishu
-//    val DB_URL = "jdbc:mysql://192.168.9.223:3306?user=root&password=ablejava"
 
     ///////////////END-OF-CONFIG//////////////////
     //下面别看了  具体逻辑
@@ -110,14 +42,12 @@ fun main(args: Array<String>) {
     while (colRs.next()) {
         val columnName = colRs.getString("COLUMN_NAME")
         val columnType = colRs.getString("TYPE_NAME")
-        val datasize = colRs.getInt("COLUMN_SIZE")
+        val dataSize = colRs.getInt("COLUMN_SIZE")
         val digits = colRs.getInt("DECIMAL_DIGITS")
         val nullable = colRs.getInt("NULLABLE") //1:可
         val message = colRs.getString("REMARKS")
         val columnDef  = colRs.getString("COLUMN_DEF") // 该列的默认值 当值在单引号内时应被解释为一个字符串
-        println("$columnName $columnType $datasize $digits $nullable $columnDef")
-//        println(message)
-//        println(colRs.getString("IS_AUTOINCREMENT"))
+        println("$columnName $columnType $dataSize $digits $nullable $columnDef")
 
         val javaField = JavaField(columnName, columnType)
         javaField.remark = message ?: ""
