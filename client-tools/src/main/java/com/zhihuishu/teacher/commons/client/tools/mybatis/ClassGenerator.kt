@@ -18,7 +18,7 @@ val IMPORT_OPENAPI = arrayListOf("java.util.List")
 val IMPORT_SERVICE_IMPL = arrayListOf("java.util.List","java.util.Date","org.springframework.beans.factory.annotation.Autowired","org.springframework.stereotype.Service")
 val IMPORT_OPENAPI_IMPL = arrayListOf("java.util.List","java.util.Date","org.springframework.beans.factory.annotation.Autowired")
 
-val IMPORT_TEST_COMMON = arrayListOf("org.junit.Test","org.springframework.beans.factory.annotation.Autowired","org.junit.runner.RunWith","org.springframework.boot.test.context.SpringBootTest","com.zhihuishu.aries.BaseTest","java.util.Arrays","java.util.List")
+val IMPORT_TEST_COMMON = arrayListOf("org.junit.Test","org.springframework.beans.factory.annotation.Autowired","org.junit.runner.RunWith","org.springframework.boot.test.context.SpringBootTest","com.zhishi.aries.BaseTest","java.util.Arrays","java.util.List")
 
 val SPACE = "    "
 
