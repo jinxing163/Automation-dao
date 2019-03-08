@@ -13,15 +13,15 @@ fun main(args: Array<String>) {
 
 
     //文件名称
-    val PKG="com.zhihuishu.aries.run"
+    val PKG="com.zhishi.aries.apply"
     //数据库名称
-    val DATABASE = "db_org_menu"
+    val DATABASE = "db_aries_apply"
     //表名称
-    val TBL_NAME = "TBL_COMPANY_MENU"
+    val TBL_NAME = "TBL_QUESTION_OPTION"
     //Java实体类名称
-    val JAVA_NAME = "CompanyMenu"
+    val JAVA_NAME = "QuestionOption"
     //表说明
-    val DESC = "企业菜单"
+    val DESC = "试题选项"
 
     val OUTPUTPATH = "E:\\zhishi\\mybatis_tools"
 

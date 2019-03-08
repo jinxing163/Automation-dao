@@ -260,7 +260,7 @@ fun generateMapperXml(tableName:String,pkg:String,javaName:String,fields:List<Ja
 
     val saveColList = StringBuilder()
     val saveValList = StringBuilder()
-    val batchSaveValList = StringBuilder()
+
     val max_idx =   fields.filter { !it.isPk }.lastIndex
 
     fields.sortedBy {mustInput(it)}.filter { !it.isPk } .forEachIndexed { idx, it ->
@@ -271,11 +271,10 @@ fun generateMapperXml(tableName:String,pkg:String,javaName:String,fields:List<Ja
         if(mustInput(it)){
             saveColList.append("\r\n$SPACE$SPACE$SPACE${it.columnName}${suffix} ")
             saveValList.append("\r\n$SPACE$SPACE$SPACE#{${it.fieldName}}${suffix} ")
-            batchSaveValList.append("\r\n$SPACE$SPACE$SPACE#{item.${it.fieldName}}${suffix} ")
+
         } else {
             saveColList.append("\r\n$SPACE$SPACE$SPACE<if test=\"${it.fieldName} != null\">${it.columnName}${suffix} </if>")
             saveValList.append("\r\n$SPACE$SPACE$SPACE<if test=\"${it.fieldName} != null\">#{${it.fieldName}}${suffix} </if>")
-            batchSaveValList.append("\r\n$SPACE$SPACE$SPACE<if test=\"item.${it.fieldName} != null\">#{item.${it.fieldName}}${suffix} </if>")
         }
     }
 
@@ -334,17 +333,6 @@ $includes
         INSERT INTO $tableName($saveColList
         ) values ($saveValList
         )
-    </insert>
-
-    <!-- 批量保存 -->
-    <insert id="batchSave" parameterType="${pkg}.model.${javaName}" keyProperty="id" useGeneratedKeys="true">
-        INSERT INTO $tableName($saveColList
-        ) values
-        <foreach collection="activityLotteryDtoIds" index="index" item="item"
-                 separator=",">
-            ($batchSaveValList)
-        </foreach>
-
     </insert>
 
      <!-- 查全部 -->
