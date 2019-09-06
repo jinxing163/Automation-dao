@@ -13,20 +13,21 @@ fun main(args: Array<String>) {
 
 
     //文件名称
-    val PKG="com.zhishi.aries.apply"
+    val PKG="com.zhishi.aries.erp"
     //数据库名称
-    val DATABASE = "db_aries_apply"
+    val DATABASE = "db_aries_erp"
     //表名称
-    val TBL_NAME = "TBL_QUESTION_OPTION"
-    //Java实体类名称
-    val JAVA_NAME = "QuestionOption"
+    val TBL_NAME = "CAL_TEAM_CALENDAR"
+    //Java实体类名称 receive
+    val JAVA_NAME = "TeamCalendar"
     //表说明
-    val DESC = "试题选项"
+    val DESC = "团队日历记录表"
 
     val OUTPUTPATH = "E:\\zhishi\\mybatis_tools"
 
     //数据库链接地址
     val DB_URL = "jdbc:mysql://192.168.222.8:3306?user=root&password=ablejava"
+//    val DB_URL = "jdbc:mysql://106.12.3.160:3306?user=root&password=123456@"
 
     ///////////////END-OF-CONFIG//////////////////
     //下面别看了  具体逻辑
@@ -321,6 +322,7 @@ fun calcField( f:JavaField) {
         "VARCHAR" -> "String"
         "TIMESTAMP" -> "Date"
         "DATETIME" -> "Date"
+        "TEXT" -> "String"
         else -> throw Exception("未识别的type $columType")
     }
     f.fieldClsImport = when (columType) {
@@ -355,7 +357,7 @@ fun generateFieldSet(indent: String, varName: String, field: JavaField): String 
                         "Long"->"${Rnd.getRandomNum(100,1000000)}L"
                         "Integer"->"${Rnd.getRandomNum(1,4)}"
                         "String"->""""abcd""""
-                        "Date"->"""new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse("${DateUtil.getCurrentDate()} 00:00:00");"""
+                        "Date"->"""new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse("${DateUtil.getCurrentDate()} 00:00:00")"""
                         else -> ""
                     }
 

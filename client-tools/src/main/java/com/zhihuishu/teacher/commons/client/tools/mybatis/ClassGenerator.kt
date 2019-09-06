@@ -301,7 +301,7 @@ $includes
                  open="(" separator="," close=")">
             #{item}
         </foreach>
-        ORDER BY CREATE_TIME DESC
+        ORDER BY ID DESC
     </select>
 
     <!-- 查单个 -->
@@ -338,7 +338,7 @@ $includes
      <!-- 查全部 -->
     <select id="listAll" resultType="${pkg}.model.${javaName}">
         SELECT <include refid="fields"/>  FROM $tableName WHERE IS_DELETED=0
-        ORDER BY CREATE_TIME DESC
+        ORDER BY ID DESC
     </select>
 </mapper>
 """
