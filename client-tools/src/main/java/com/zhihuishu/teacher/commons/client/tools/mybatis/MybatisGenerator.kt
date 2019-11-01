@@ -13,18 +13,20 @@ fun main(args: Array<String>) {
 
 
     //文件名称
-    val PKG="com.zhishi.aries.erp"
+    val PKG="com.zhishi.aries.survey"
+
     //数据库名称
-    val DATABASE = "db_aries_erp"
+    val DATABASE = "db_aries_survey"
     //表名称
-    val TBL_NAME = "CAL_TEAM_CALENDAR"
+    val TBL_NAME = "TBL_ACTIVITY_SIGN"
     //Java实体类名称 receive
-    val JAVA_NAME = "TeamCalendar"
+    val JAVA_NAME = "ActivitySign"
+
     //表说明
-    val DESC = "团队日历记录表"
+    val DESC = "活动签到"
 
     val OUTPUTPATH = "E:\\zhishi\\mybatis_tools"
-
+7
     //数据库链接地址
     val DB_URL = "jdbc:mysql://192.168.222.8:3306?user=root&password=ablejava"
 //    val DB_URL = "jdbc:mysql://106.12.3.160:3306?user=root&password=123456@"

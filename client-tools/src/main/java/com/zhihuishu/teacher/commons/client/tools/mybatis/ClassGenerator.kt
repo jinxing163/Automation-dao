@@ -11,46 +11,48 @@ val IMPL_SERIAL = arrayListOf("java.io.Serializable")
 
 val ANNO_MAPPER = arrayListOf("@Repository")
 
-val IMPORT_MAPPER = arrayListOf("java.util.List","org.apache.ibatis.annotations.Param","org.springframework.stereotype.Repository")
+val IMPORT_MAPPER = arrayListOf("java.util.List", "org.apache.ibatis.annotations.Param", "org.springframework.stereotype.Repository")
 val IMPORT_SERVICE = arrayListOf("java.util.List")
 val IMPORT_OPENAPI = arrayListOf("java.util.List")
 
-val IMPORT_SERVICE_IMPL = arrayListOf("java.util.List","java.util.Date","org.springframework.beans.factory.annotation.Autowired","org.springframework.stereotype.Service")
-val IMPORT_OPENAPI_IMPL = arrayListOf("java.util.List","java.util.Date","org.springframework.beans.factory.annotation.Autowired")
+val IMPORT_SERVICE_IMPL = arrayListOf("java.util.List", "java.util.Date", "org.springframework.beans.factory.annotation.Autowired", "org.springframework.stereotype.Service")
+val IMPORT_OPENAPI_IMPL = arrayListOf("java.util.List", "java.util.Date", "org.springframework.beans.factory.annotation.Autowired")
 
-val IMPORT_TEST_COMMON = arrayListOf("org.junit.Test","org.springframework.beans.factory.annotation.Autowired","org.junit.runner.RunWith","org.springframework.boot.test.context.SpringBootTest","com.zhishi.aries.BaseTest","java.util.Arrays","java.util.List")
+val IMPORT_TEST_COMMON = arrayListOf("org.junit.Test", "org.springframework.beans.factory.annotation.Autowired", "org.junit.runner.RunWith", "org.springframework.boot.test.context.SpringBootTest", "com.zhishi.aries.BaseTest", "java.util.Arrays", "java.util.List")
 
 val SPACE = "    "
 
-fun getCamelSplitName(name: String):String {
-    return  NameUtil.getCamelSplitName(name)
+fun getCamelSplitName(name: String): String {
+    return NameUtil.getCamelSplitName(name)
 }
 
-fun pend(list: MutableList<String>, vararg str: String):List<String> {
+fun pend(list: MutableList<String>, vararg str: String): List<String> {
     str.forEach {
         list.add(it)
     }
     return list
 }
-fun pendNew(list: MutableList<String>, vararg str: String):List<String> {
+
+fun pendNew(list: MutableList<String>, vararg str: String): List<String> {
     var allList = mutableListOf<String>()
     allList.addAll(list)
 
-    return pend(allList,*str)
+    return pend(allList, *str)
 }
-fun autowiredField(clsName: String):String {
+
+fun autowiredField(clsName: String): String {
     val varName = nameToCamel(clsName)
 
     return "@Autowired\r\n${SPACE}private $clsName $varName"
 }
 
-fun generateCls(pkg:String,desc:String,clsName:String,fields:List<JavaField>?,extraImports:List<String>?= arrayListOf(),extraField:List<String>?= arrayListOf(),implClses:List<String>?= arrayListOf(),superClsName:String?=null,extraAnnos:List<String>?= arrayListOf(),extraMethods:List<String>?= arrayListOf()):String {
-    val fieldList =  StringBuilder()
+fun generateCls(pkg: String, desc: String, clsName: String, fields: List<JavaField>?, extraImports: List<String>? = arrayListOf(), extraField: List<String>? = arrayListOf(), implClses: List<String>? = arrayListOf(), superClsName: String? = null, extraAnnos: List<String>? = arrayListOf(), extraMethods: List<String>? = arrayListOf()): String {
+    val fieldList = StringBuilder()
     val importList = StringBuilder()
     val implClsList = StringBuilder()
     val extendsCls = StringBuilder()
     val methodsList = StringBuilder()
-    val annoList =  StringBuilder()
+    val annoList = StringBuilder()
     val totalImport = mutableSetOf<String>()
 
     //import
@@ -65,7 +67,7 @@ fun generateCls(pkg:String,desc:String,clsName:String,fields:List<JavaField>?,ex
     }
 
     //超类
-    superClsName?.let{
+    superClsName?.let {
         extendsCls.append("""extends $it""")
     }
 
@@ -120,20 +122,19 @@ fun generateCls(pkg:String,desc:String,clsName:String,fields:List<JavaField>?,ex
 
     //toString
     fields?.let {
-        val toStrPrefix="""
+        val toStrPrefix = """
     @Override
     public String toString() {
         return "$clsName{" +
 """
-        val toStrSuffix="""
+        val toStrSuffix = """
                 '}';
     }
 """
         var sb = StringBuilder()
-        fields.forEachIndexed{
-            idx,it->
-                sb.append("""                "${if(idx!=0) "," else ""}${it.fieldName}=" + ${it.fieldName} + """)
-                sb.append("\r\n")
+        fields.forEachIndexed { idx, it ->
+            sb.append("""                "${if (idx != 0) "," else ""}${it.fieldName}=" + ${it.fieldName} + """)
+            sb.append("\r\n")
         }
         totalMethods.add("$toStrPrefix$sb$toStrSuffix")
     }
@@ -142,7 +143,7 @@ fun generateCls(pkg:String,desc:String,clsName:String,fields:List<JavaField>?,ex
         totalMethods.addAll(extraMethods)
     }
 
-    totalMethods?.let{
+    totalMethods?.let {
         it.forEach {
             methodsList.append("${it}\r\n")
         }
@@ -163,19 +164,20 @@ $methodsList
 """
 }
 
-fun appendComment(sb:StringBuilder,txt:String) {
+fun appendComment(sb: StringBuilder, txt: String) {
     sb.append("${SPACE}/**\r\n")
     sb.append("${SPACE} * $txt\r\n")
     sb.append("${SPACE} */\r\n")
 }
-fun appendEnter(sb:StringBuilder) {
+
+fun appendEnter(sb: StringBuilder) {
     sb.append("${SPACE}\r\n")
 }
 
-fun generateInterface(pkg:String,desc:String,clsName:String,useWrap:Boolean?=false,objName:String,extraImports:List<String>?= arrayListOf(),extraAnnos:List<String>?= arrayListOf(),implClses:List<String>?= arrayListOf()):String {
-    val annoList =  StringBuilder()
+fun generateInterface(pkg: String, desc: String, clsName: String, useWrap: Boolean? = false, objName: String, extraImports: List<String>? = arrayListOf(), extraAnnos: List<String>? = arrayListOf(), implClses: List<String>? = arrayListOf()): String {
+    val annoList = StringBuilder()
     val importList = StringBuilder()
-    val methodsList =  StringBuilder()
+    val methodsList = StringBuilder()
     val implClsList = StringBuilder()
     val imported = hashSetOf<String>()
 
@@ -191,20 +193,19 @@ fun generateInterface(pkg:String,desc:String,clsName:String,useWrap:Boolean?=fal
     }
 
 
-
 //    extraMethods?.forEach {
-        val variableName = nameToCamel(objName)
-        val mapOf = mutableMapOf(
-                "space" to SPACE
-                ,"variableName" to variableName
-                ,"description" to desc
-                ,"scope" to ""
-                ,"objType" to objName
-        )
+    val variableName = nameToCamel(objName)
+    val mapOf = mutableMapOf(
+            "space" to SPACE
+            , "variableName" to variableName
+            , "description" to desc
+            , "scope" to ""
+            , "objType" to objName
+    )
 
     //dao
     if (!useWrap!!) {
-        mapOf.put("paramAnno","@Param(\"${'$'}{_this_variableName}\") ")
+        mapOf.put("paramAnno", "@Param(\"${'$'}{_this_variableName}\") ")
     }
 
     val method = MethodImplUtil.resolveInterface(mapOf)
@@ -236,23 +237,23 @@ $method
 """
 }
 
-fun generateMapperXml(tableName:String,pkg:String,javaName:String,fields:List<JavaField>):String{
-    val includes = fields.joinToString(",\r\n") { javaField -> SPACE +SPACE + javaField.columnName }
+fun generateMapperXml(tableName: String, pkg: String, javaName: String, fields: List<JavaField>): String {
+    val includes = fields.joinToString(",\r\n") { javaField -> SPACE + SPACE + javaField.columnName }
     val variableName = nameToCamel(javaName)
-    val containsDeletePerson: Boolean = dbFieldsExists(fields,"DELETE_PERSON")
+    val containsDeletePerson: Boolean = dbFieldsExists(fields, "DELETE_PERSON")
     val deleteSetStmt = if (containsDeletePerson) """<if test="deletePerson != null">DELETE_PERSON = #{deletePerson}, </if>""" else ""
 
     val idField = fields.first { it.isPk }.fieldName
     val idColumn = fields.first { it.isPk }.columnName
 
-    fun mustInput(f:JavaField):Boolean{
+    fun mustInput(f: JavaField): Boolean {
         return !f.nullable && f.defaultValue == null
     }
 
     val updateList = StringBuilder()
-    fields.filter { !it.isPk } .forEach {
-//        if(mustInput(it)){
-            updateList.append("\r\n$SPACE$SPACE$SPACE<if test=\"${it.fieldName} != null\">${it.columnName}= #{${it.fieldName}}, </if>")
+    fields.filter { !it.isPk }.forEach {
+        //        if(mustInput(it)){
+        updateList.append("\r\n$SPACE$SPACE$SPACE<if test=\"${it.fieldName} != null\">${it.columnName}= #{${it.fieldName}}, </if>")
 //        } else {
 //            updateList.append("\r\n$SPACE$SPACE$SPACE<if test=\"${it.fieldName} != null\">${it.columnName}= #{${it.fieldName}}, </if>")
 //        }
@@ -261,20 +262,26 @@ fun generateMapperXml(tableName:String,pkg:String,javaName:String,fields:List<Ja
     val saveColList = StringBuilder()
     val saveValList = StringBuilder()
 
-    val max_idx =   fields.filter { !it.isPk }.lastIndex
+    val max_idx = fields.filter { !it.isPk }.lastIndex
 
-    fields.sortedBy {mustInput(it)}.filter { !it.isPk } .forEachIndexed { idx, it ->
-        var suffix = if(idx == max_idx) "" else ","
+    fields.sortedBy { mustInput(it) }.filter { !it.isPk }.forEachIndexed { idx, it ->
+        var suffix = if (idx == max_idx) "" else ","
 
 //        println("$idx / ${fields.lastIndex}")
 
-        if(mustInput(it)){
+        if (mustInput(it)) {
             saveColList.append("\r\n$SPACE$SPACE$SPACE${it.columnName}${suffix} ")
             saveValList.append("\r\n$SPACE$SPACE$SPACE#{${it.fieldName}}${suffix} ")
 
         } else {
-            saveColList.append("\r\n$SPACE$SPACE$SPACE<if test=\"${it.fieldName} != null\">${it.columnName}${suffix} </if>")
-            saveValList.append("\r\n$SPACE$SPACE$SPACE<if test=\"${it.fieldName} != null\">#{${it.fieldName}}${suffix} </if>")
+
+            if (it.columnName.isNotEmpty() && it.columnName.toLowerCase() == "IS_DELETED".toLowerCase()) {
+
+            } else {
+                saveColList.append("\r\n$SPACE$SPACE$SPACE<if test=\"${it.fieldName} != null\">${it.columnName}${suffix} </if>")
+                saveValList.append("\r\n$SPACE$SPACE$SPACE<if test=\"${it.fieldName} != null\">#{${it.fieldName}}${suffix} </if>")
+            }
+
         }
     }
 
@@ -331,7 +338,9 @@ $includes
     <!-- 保存 -->
     <insert id="save" parameterType="${pkg}.model.${javaName}" keyProperty="$idField" useGeneratedKeys="true">
         INSERT INTO $tableName($saveColList
+            IS_DELETED
         ) values ($saveValList
+            0
         )
     </insert>
 
